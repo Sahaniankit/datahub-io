@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vande Bharat Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070a; --bg2:#0c0e14; --line:#262a35; --ink:#f3f1ec;
+  --jade:#00e6a0; --coral:#ff5d73; --gold:#ffbe3d; --violet:#a98bff;
+  --dim:#9a9aa8; --card:#101217; --card2:#14161d;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:calc(72px + env(safe-area-inset-top,0px)); height:100%}
+body{
+  margin:0; min-height:100%; font-family:'Inter',sans-serif; color:var(--ink);
+  background:
+    radial-gradient(900px 480px at 85% -8%, #1d3a3222 0%, transparent 55%),
+    radial-gradient(800px 460px at 0% 10%, #3a1d3a26 0%, transparent 55%),
+    var(--bg);
+  overflow-x:hidden;
+}
+h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
+
+/* floating pill nav */
+nav{position:sticky; top:12px; z-index:40; padding-top:env(safe-area-inset-top,0px)}
+.nav-inner{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  max-width:860px; margin:0 auto; padding:10px 10px 10px 20px;
+  background:rgba(16,18,23,.78); backdrop-filter:blur(14px);
+  border:1px solid var(--line); border-radius:999px;
+  box-shadow:0 10px 30px -14px #000000aa;
+}
+.brand{font-family:'Space Grotesk'; font-weight:700; font-size:15.5px; letter-spacing:.01em}
+.brand span{color:var(--jade)}
+.navbtns{display:flex; gap:6px}
+.nbtn{
+  appearance:none; border:none; background:transparent; color:var(--dim);
+  font-family:'Inter'; font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px;
+  cursor:pointer; transition:.25s;
+}
+.nbtn:hover{color:var(--ink)}
+.nbtn.active{color:#06070a; background:linear-gradient(120deg,var(--jade),var(--violet))}
+
+.glow-btn{
+  appearance:none; cursor:pointer; font-family:'Space Grotesk'; font-weight:700; font-size:14.5px;
+  color:#06070a; background:linear-gradient(120deg,var(--jade),var(--gold));
+  border:none; padding:14px 26px; border-radius:12px; display:inline-flex; align-items:center; gap:8px;
+  box-shadow:0 0 0 #0000; transition:box-shadow .3s, transform .2s;
+}
+.glow-btn:hover{box-shadow:0 10px 32px -8px #00e6a088; transform:translateY(-2px)}
+.glow-btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--line)}
+.glow-btn.ghost:hover{border-color:var(--violet)}
+
+main{position:relative; z-index:1}
+.view{display:none; animation:rise .5s ease both}
+.view.on{display:block}
+@keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+
+header.hero{padding:56px 0 48px; display:grid; grid-template-columns:1.25fr .75fr; gap:28px; align-items:center}
+@media(max-width:820px){header.hero{grid-template-columns:1fr}}
+.kicker{display:inline-block; color:var(--jade); font-size:12.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin:0 0 18px; padding:5px 12px; border:1px solid #1d3a3250; border-radius:999px; background:#0c1613}
+.hero h1{font-size:clamp(34px,6vw,54px); line-height:1.05; margin:0 0 18px; max-width:12ch;
+  background:linear-gradient(100deg,#fff 10%,var(--jade) 45%,var(--violet) 85%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;}
+.hero p.lede{font-size:16.5px; color:var(--dim); max-width:50ch; margin:0 0 28px}
+.hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:34px}
+.stat-row{display:flex; gap:28px; flex-wrap:wrap}
+.stat .num{font-family:'Space Grotesk'; font-size:32px; font-weight:700; color:var(--jade)}
+.stat .label{font-size:12px; color:var(--dim)}
+.hero-art{position:relative; height:260px; display:flex; align-items:center; justify-content:center}
+.hero-art svg{width:100%; height:100%}
+@media(max-width:820px){.hero-art{display:none}}
+
+section{padding:52px 0; position:relative; z-index:1}
+section.split{border-top:1px solid var(--line)}
+.section-head{max-width:62ch; margin-bottom:32px}
+.section-head h2{font-size:clamp(23px,4vw,30px); margin:0 0 10px}
+.section-head p{color:var(--dim); margin:0; font-size:15px}
+
+.tracks{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+@media(max-width:720px){.tracks{grid-template-columns:1fr}}
+.track{background:var(--card); padding:28px 24px; border:1px solid var(--line); border-radius:14px; border-left:3px solid var(--jade); transition:.25s}
+.track.dim{border-left-color:var(--gold)}
+.track:hover{transform:translateY(-3px); box-shadow:0 16px 36px -18px #000}
+.track .tag{font-size:12px; font-weight:700; color:var(--jade); letter-spacing:.05em; margin-bottom:8px}
+.track.dim .tag{color:var(--gold)}
+.track h3{font-size:21px; margin:0 0 12px}
+.track p{color:var(--dim); font-size:14px; margin:0 0 16px}
+.track ul{list-style:none; margin:0; padding:0}
+.track li{font-size:13.5px; padding:8px 0; border-top:1px dashed var(--line); display:flex; justify-content:space-between; gap:12px}
+.track li:first-child{border-top:none}
+.track li span:last-child{color:var(--dim); text-align:right}
+
+.board{display:flex; flex-direction:column; gap:10px}
+.brow{display:grid; grid-template-columns:1.6fr 1fr auto; gap:14px; padding:16px 18px; align-items:center;
+  background:var(--card); border:1px solid var(--line); border-radius:12px; transition:.2s}
+.brow:hover{border-color:var(--violet)}
+.brow .route{font-family:'Space Grotesk'; font-size:15px; font-weight:600}
+.brow .stops{font-size:12.5px; color:var(--dim)}
+.brow .dist{font-size:12.5px; color:var(--jade); font-family:'Space Grotesk'; white-space:nowrap}
+
+.chain{display:flex; flex-wrap:wrap; gap:0; margin:18px 0 6px}
+.chain .stop{font-size:13px; background:var(--card); border:1px solid var(--line); padding:6px 12px; border-radius:20px}
+.chain .arrow{color:#394152; padding:0 6px}
+
+.fact-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+@media(max-width:720px){.fact-grid{grid-template-columns:1fr}}
+.fact{border:1px solid var(--line); border-radius:14px; padding:22px; background:var(--card); position:relative; transition:.25s}
+.fact:hover{border-color:var(--coral)}
+.fact:nth-child(1){border-top:3px solid var(--jade)}
+.fact:nth-child(2){border-top:3px solid var(--coral)}
+.fact:nth-child(3){border-top:3px solid var(--violet)}
+.fact .q{position:absolute; top:14px; right:18px; font-family:'Space Grotesk'; font-size:34px; color:#1c1f28}
+.fact p{font-size:14px; color:var(--ink); margin:0; line-height:1.55}
+
+table.compare{width:100%; border-collapse:collapse; font-size:14px}
+table.compare th,table.compare td{text-align:left; padding:13px 14px; border-bottom:1px solid var(--line)}
+table.compare th{color:var(--dim); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.04em}
+table.compare td:first-child{color:var(--dim); width:30%}
+table.compare td.r{color:var(--jade)} table.compare td.u{color:var(--gold)}
+
+.booking-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+@media(max-width:720px){.booking-grid{grid-template-columns:1fr}}
+.booking-grid .cell{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px}
+.booking-grid .cell .n{color:var(--violet); font-family:'Space Grotesk'; font-size:13px; margin-bottom:10px; font-weight:700}
+.booking-grid .cell h4{margin:0 0 8px; font-size:16px}
+.booking-grid .cell p{margin:0; font-size:13.5px; color:var(--dim)}
+
+footer{border-top:1px solid var(--line); padding:36px 0 56px}
+footer p{color:var(--dim); font-size:12.5px; max-width:60ch}
+
+.tt-head{padding:44px 0 6px}
+.tt-head h2{font-size:clamp(25px,4.5vw,34px); margin:0 0 10px}
+.tt-head p{color:var(--dim); font-size:14.5px; max-width:56ch}
+.filters{display:flex; gap:8px; flex-wrap:wrap; margin:20px 0 4px}
+.chip{border:1px solid var(--line); background:transparent; color:var(--dim); font-size:12.5px; font-weight:600; padding:8px 15px; border-radius:999px; cursor:pointer; transition:.2s}
+.chip.on{color:#06070a; background:var(--jade); border-color:transparent}
+
+.ttable-wrap{padding:32px 0}
+.ttcard{border:1px solid var(--line); border-radius:14px; margin-bottom:16px; overflow:hidden; background:var(--card); border-left:3px solid var(--violet); transition:.2s}
+.ttcard:hover{transform:translateY(-2px)}
+.ttcard[data-type="unr"]{border-left-color:var(--gold)}
+.ttcard .tt-top{display:flex; justify-content:space-between; align-items:flex-start; padding:20px 22px 14px; flex-wrap:wrap; gap:10px}
+.ttcard h4{font-size:17px; margin:0 0 4px}
+.ttcard .num{font-size:12px; color:var(--dim); font-family:'Space Grotesk'}
+.ttcard .badge{font-size:11px; font-weight:700; padding:5px 12px; border-radius:999px; letter-spacing:.03em}
+.badge.res{background:#102a22; color:var(--jade)}
+.badge.unr{background:#2e2410; color:var(--gold)}
+.tt-route{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:14px; padding:4px 22px 18px}
+.tt-end{font-family:'Space Grotesk'; font-size:14.5px}
+.tt-time{font-size:21px; font-weight:700; font-family:'Space Grotesk'; color:var(--ink)}
+.tt-mid{text-align:center; color:var(--dim); font-size:11.5px}
+.tt-mid .dur{color:var(--violet); font-weight:700; margin-bottom:4px; display:block}
+.tt-days{display:flex; gap:5px; padding:0 22px 20px; flex-wrap:wrap}
+.day{font-size:11px; width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); color:#4a5064}
+.day.run{color:#06070a; background:var(--violet); border-color:transparent}
+.tt-note{padding:0 22px 20px; font-size:12px; color:var(--dim); border-top:1px solid var(--line); margin-top:4px; padding-top:14px}
+
+@media (max-width:860px){ .tt-route{grid-template-columns:1fr auto 1fr; gap:8px} .tt-time{font-size:18px} }
+
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  nav{top:8px} .nav-inner{padding:8px 8px 8px 16px; border-radius:20px}
+  .brand{font-size:14px} .nbtn{padding:8px 12px; font-size:12px}
+  header.hero{padding:40px 0 32px}
+  .hero h1{max-width:none; font-size:clamp(28px,8.5vw,38px)}
+  .hero p.lede{font-size:15px}
+  .hero-ctas{flex-direction:column; align-items:stretch}
+  .glow-btn{justify-content:center; padding:14px 20px}
+  .stat-row{gap:18px 24px} .stat .num{font-size:26px}
+  section{padding:36px 0} .section-head h2{font-size:22px}
+  .track{padding:22px 18px}
+  .brow{grid-template-columns:1fr; gap:4px; padding:14px 16px}
+  .brow .dist{color:var(--dim)}
+  table.compare{display:block}
+  table.compare,table.compare tbody,table.compare tr{display:block; width:100%}
+  table.compare th:first-child{display:none}
+  table.compare tr{border-bottom:1px solid var(--line); padding:12px 0}
+  table.compare tr:first-child{display:none}
+  table.compare td{display:flex; justify-content:space-between; gap:12px; border:none; padding:5px 2px; font-size:13.5px}
+  table.compare td:first-child{color:var(--dim); width:auto; font-size:11px; text-transform:uppercase; letter-spacing:.04em; align-self:center}
+  .tt-top{padding:16px 16px 10px; flex-direction:column; align-items:flex-start; gap:8px}
+  .tt-route{grid-template-columns:1fr; text-align:left; gap:10px; padding:2px 16px 14px}
+  .tt-route > div:last-child{text-align:left !important}
+  .tt-mid{text-align:left; display:flex; align-items:center; gap:8px}
+  .tt-mid .dur{margin-bottom:0}
+  .tt-time{font-size:23px}
+  .tt-days{padding:0 16px 16px} .tt-note{padding:0 16px 16px; padding-top:12px}
+  .chain{gap:6px 0} .chain .stop{font-size:12px; padding:5px 10px}
+}
+html, body{min-height:100%}
+@supports (height:100svh){ body{min-height:100svh} }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">VANDE<span>•</span>BHARAT</div>
+    <div class="navbtns">
+      <button class="nbtn active" data-view="overview">Overview</button>
+      <button class="nbtn" data-view="timetable">Timings & Dates</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ OVERVIEW VIEW ============ -->
+<section class="view on" id="view-overview">
+  <header class="hero wrap">
+    <div class="hero-copy">
+      <p class="kicker">Indian Railways · semi-high-speed network</p>
+      <h1>Vande Bharat, mapped two ways</h1>
+      <p class="lede">A reserved seat on an intercity Chair Car or Sleeper Express, or an unreserved hop on the shorter Namo Bharat Rapid Rail — this is how the whole network fits together, with real running days and clock times.</p>
+      <div class="hero-ctas">
+        <button class="glow-btn" data-view="timetable">See exact timings →</button>
+        <a class="glow-btn ghost" href="#compare">Compare booking apps</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num">164</div><div class="label">train services running</div></div>
+        <div class="stat"><div class="num">83+</div><div class="label">routes covered</div></div>
+        <div class="stat"><div class="num">16</div><div class="label">railway zones</div></div>
+        <div class="stat"><div class="num">274+</div><div class="label">districts reached</div></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 300 260">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#00e6a0"/>
+            <stop offset="100%" stop-color="#a98bff"/>
+          </linearGradient>
+        </defs>
+        <circle cx="150" cy="130" r="92" fill="none" stroke="url(#g1)" stroke-width="1.4" opacity=".55"/>
+        <circle cx="150" cy="130" r="62" fill="none" stroke="#ff5d73" stroke-width="1" opacity=".4"/>
+        <path d="M20 190 C100 150, 200 210, 280 140" fill="none" stroke="#00e6a0" stroke-width="2" opacity=".7"/>
+        <path d="M30 80 C110 40, 190 110, 270 60" fill="none" stroke="#a98bff" stroke-width="1.4" opacity=".5"/>
+        <circle cx="150" cy="130" r="6" fill="#ffbe3d"/>
+      </svg>
+    </div>
+  </header>
+
+  <section class="split">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Reserved, or unreserved — pick your track</h2>
+        <p>Same trainset design underneath. What changes is how you board, how far you're going, and what it costs.</p>
+      </div>
+      <div class="tracks">
+        <div class="track">
+          <div class="tag">RESERVED</div>
+          <h3>Vande Bharat Express</h3>
+          <p>Assigned seat, booked in advance, built for 300–1,500 km intercity runs.</p>
+          <ul>
+            <li><span>Classes</span><span>Chair Car (CC), Executive (EC)</span></li>
+            <li><span>Sleeper variant</span><span>1 route live — Howrah–Guwahati</span></li>
+            <li><span>Booking opens</span><span>120 days ahead + Tatkal</span></li>
+            <li><span>Boarding</span><span>Your ticketed coach only</span></li>
+          </ul>
+        </div>
+        <div class="track dim">
+          <div class="tag">UNRESERVED</div>
+          <h3>Namo Bharat Rapid Rail</h3>
+          <p>No seat assignment, walk-up ticket, built for 100–350 km hops — formerly Vande Metro.</p>
+          <ul>
+            <li><span>Classes</span><span>Single AC class, standing allowed</span></li>
+            <li><span>Live corridors</span><span>2 — Ahmedabad–Bhuj, Jayanagar–Patna</span></li>
+            <li><span>Booking</span><span>Counter / UTS app, same day</span></li>
+            <li><span>Boarding</span><span>Any coach, first come first seated</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Flagship reserved corridors</h2>
+        <p>A sample of major Chair Car routes. Exact clock times and running days are under the Timings & Dates tab.</p>
+      </div>
+      <div class="board">
+        <div class="brow"><div class="route">Mumbai Central ↔ Gandhinagar Capital</div><div class="stops">Borivali · Vapi · Surat · Vadodara · Ahmedabad</div><div class="dist">521 km</div></div>
+        <div class="brow"><div class="route">Mumbai CSMT ↔ Solapur</div><div class="stops">Dadar · Kalyan · Pune · Kurduwadi</div><div class="dist">452 km</div></div>
+        <div class="brow"><div class="route">Mumbai CSMT ↔ Sainagar Shirdi</div><div class="stops">Dadar · Thane · Nashik Road</div><div class="dist">339 km</div></div>
+        <div class="brow"><div class="route">Bilaspur ↔ Nagpur</div><div class="stops">Raipur · Durg · Rajnandgaon · Gondia</div><div class="dist">413 km</div></div>
+        <div class="brow"><div class="route">New Delhi ↔ Varanasi</div><div class="stops">Kanpur Central · Prayagraj</div><div class="dist">771 km</div></div>
+        <div class="brow"><div class="route">Howrah ↔ New Jalpaiguri</div><div class="stops">Bolpur Shantiniketan · Malda Town</div><div class="dist">561 km</div></div>
+        <div class="brow"><div class="route">Chennai Central ↔ Mysuru</div><div class="stops">Katpadi · KSR Bengaluru</div><div class="dist">497 km</div></div>
+        <div class="brow"><div class="route">Howrah ↔ Guwahati</div><div class="stops">Sleeper variant</div><div class="dist">968 km</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Namo Bharat, stop by stop</h2>
+        <p>Still early — two corridors live today, over a hundred cities planned.</p>
+      </div>
+      <h4 style="font-family:'Space Grotesk';margin:0 0 4px">Ahmedabad ↔ Bhuj</h4>
+      <p style="color:var(--dim);font-size:13.5px;margin:0 0 4px">359 km · ~5h 45m · first Namo Bharat corridor, launched 2024</p>
+      <div class="chain">
+        <span class="stop">Ahmedabad</span><span class="arrow">→</span>
+        <span class="stop">Sabarmati</span><span class="arrow">→</span>
+        <span class="stop">Viramgam</span><span class="arrow">→</span>
+        <span class="stop">Dhrangadhra</span><span class="arrow">→</span>
+        <span class="stop">Halvad</span><span class="arrow">→</span>
+        <span class="stop">Samakhiali</span><span class="arrow">→</span>
+        <span class="stop">Bhachau</span><span class="arrow">→</span>
+        <span class="stop">Gandhidham</span><span class="arrow">→</span>
+        <span class="stop">Anjar</span><span class="arrow">→</span>
+        <span class="stop">Bhuj</span>
+      </div>
+      <p style="color:var(--dim); font-size:13.5px; margin-top:28px">Also live: <b style="color:var(--text)">Jayanagar ↔ Patna</b> (Bihar), run as a 16-coach train for heavier daily demand. Planned next: Chennai–Tirupati, Bhubaneswar–Rourkela, Agra–Mathura, Delhi–Rewari, Lucknow–Kanpur, Secunderabad–Muzaffarpur.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><h2>Good to know</h2></div>
+      <div class="fact-grid">
+        <div class="fact"><span class="q">”</span><p>Vande Bharat trains have carried over 9.1 crore passengers across roughly 1 lakh trips since the first one launched in 2019.</p></div>
+        <div class="fact"><span class="q">”</span><p>The sleeper variant exists on just one route so far — Howrah to Guwahati — making it the only way to do an overnight Vande Bharat journey.</p></div>
+        <div class="fact"><span class="q">”</span><p>Namo Bharat trains are fully air-conditioned despite being unreserved — closer to an AC version of a regular EMU than a budget train.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="wrap">
+      <div class="section-head"><h2>Reserved vs unreserved, side by side</h2></div>
+      <table class="compare">
+        <tr><th></th><th>Reserved — Vande Bharat</th><th>Unreserved — Namo Bharat</th></tr>
+        <tr><td>Seat</td><td class="r">Fixed seat on your ticket</td><td class="u">None — first come, first seated</td></tr>
+        <tr><td>Standing room</td><td class="r">Not permitted</td><td class="u">Allowed once seats fill</td></tr>
+        <tr><td>Booking</td><td class="r">IRCTC advance / Tatkal, PNR issued</td><td class="u">Counter or UTS app, no reservation</td></tr>
+        <tr><td>Typical distance</td><td class="r">300–1,500+ km</td><td class="u">Under 250 km, up to 350 km</td></tr>
+        <tr><td>Fare</td><td class="r">Higher — distance + CC/EC class</td><td class="u">Lower — close to unreserved EMU fare</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="compare">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How this compares to booking apps</h2>
+        <p>This page is for understanding the network at a glance. For live seats, PNR and running status, these do the job well:</p>
+      </div>
+      <div class="fact-grid">
+        <div class="fact"><p><b style="color:var(--rail)">IRCTC / RailOne</b> — the official source. Only place that actually issues tickets; best for booking and refunds.</p></div>
+        <div class="fact"><p><b style="color:var(--rail)">ixigo / Trainman</b> — strong for live running status, seat availability prediction, and platform/coach position.</p></div>
+        <div class="fact"><p><b style="color:var(--rail)">m-Indicator</b> — best for Mumbai-area suburban + AC local integration alongside long-distance trains.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>Route counts, corridors and timings reflect recent public schedules and change as services are added or revised — confirm exact timings, running-day exceptions and fares on IRCTC or NTES before travel.</p>
+    </div>
+  </footer>
+</section>
+
+<!-- ============ TIMETABLE VIEW ============ -->
+<section class="view" id="view-timetable">
+  <div class="wrap tt-head">
+    <h2>Timings & running dates</h2>
+    <p>Departure and arrival clock times, train numbers, and which days each service actually runs. Running-day exceptions shift occasionally — always cross-check close to your travel date.</p>
+    <div class="filters">
+      <button class="chip on" data-f="all">All</button>
+      <button class="chip" data-f="res">Reserved</button>
+      <button class="chip" data-f="unr">Unreserved</button>
+    </div>
+  </div>
+
+  <div class="wrap ttable-wrap" id="tt-list">
+
+    <div class="ttcard" data-type="res">
+      <div class="tt-top">
+        <div><h4>Mumbai Central ↔ Gandhinagar Capital</h4><div class="num">Train 20901 / 20902 · Western Railway</div></div>
+        <div class="badge res">RESERVED · CC / EC</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Mumbai Central</div><div class="tt-time">06:00</div></div>
+        <div class="tt-mid"><span class="dur">~6h 30m</span>521 km</div>
+        <div style="text-align:right"><div class="tt-end">Gandhinagar Capital</div><div class="tt-time">12:30</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day run">T</span><span class="day">W</span><span class="day run">T</span><span class="day run">F</span><span class="day run">S</span>
+      </div>
+      <div class="tt-note">Runs 6 days a week — off on Wednesday. Return train 20902 leaves Gandhinagar Capital 14:05, reaches Mumbai Central 20:35. Via Borivali, Vapi, Surat, Vadodara, Anand, Ahmedabad.</div>
+    </div>
+
+    <div class="ttcard" data-type="res">
+      <div class="tt-top">
+        <div><h4>Mumbai CSMT ↔ Solapur</h4><div class="num">Train 22223 / 22224 · Central Railway</div></div>
+        <div class="badge res">RESERVED · CC / EC</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Mumbai CSMT</div><div class="tt-time">16:05</div></div>
+        <div class="tt-mid"><span class="dur">~6h 35m</span>452 km</div>
+        <div style="text-align:right"><div class="tt-end">Solapur</div><div class="tt-time">22:40</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day run">T</span><span class="day">W</span><span class="day run">T</span><span class="day run">F</span><span class="day run">S</span>
+      </div>
+      <div class="tt-note">Runs 6 days a week — off on Wednesday. Via Dadar, Kalyan, Pune, Daund, Kurduwadi.</div>
+    </div>
+
+    <div class="ttcard" data-type="res">
+      <div class="tt-top">
+        <div><h4>Mumbai CSMT ↔ Sainagar Shirdi</h4><div class="num">Central Railway</div></div>
+        <div class="badge res">RESERVED · CC / EC</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Mumbai CSMT</div><div class="tt-time">05:25</div></div>
+        <div class="tt-mid"><span class="dur">~5h 20m</span>339 km</div>
+        <div style="text-align:right"><div class="tt-end">Sainagar Shirdi</div><div class="tt-time">10:45</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day">T</span><span class="day run">W</span><span class="day run">T</span><span class="day run">F</span><span class="day run">S</span>
+      </div>
+      <div class="tt-note">Runs daily except Tuesday. Via Dadar, Thane, Nashik Road — a popular same-day pilgrimage run from Mumbai.</div>
+    </div>
+
+    <div class="ttcard" data-type="res">
+      <div class="tt-top">
+        <div><h4>Surat ↔ Udaipur City</h4><div class="num">Train 26903 / 26904 · Western Railway · launched 2 Oct 2026</div></div>
+        <div class="badge res">RESERVED · CC / EC</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Surat</div><div class="tt-time">06:10</div></div>
+        <div class="tt-mid"><span class="dur">~7h 30m</span>690 km</div>
+        <div style="text-align:right"><div class="tt-end">Udaipur City</div><div class="tt-time">13:40</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day">T</span><span class="day run">W</span><span class="day run">T</span><span class="day run">F</span><span class="day run">S</span>
+      </div>
+      <div class="tt-note">South Gujarat's first Vande Bharat. Runs 6 days a week — off on Tuesday. Return 26904 leaves Udaipur City 15:35, reaches Surat 23:00. Via Bharuch, Vadodara, Himmatnagar, Asarva, Dungarpur. Commercial service begins 3–4 October 2026; replaces the older Udaipur–Asarva/Ahmedabad Vande Bharat.</div>
+    </div>
+
+    <div class="ttcard" data-type="res">
+      <div class="tt-top">
+        <div><h4>Bilaspur ↔ Nagpur</h4><div class="num">Train 20825 / 20826 · South East Central Railway</div></div>
+        <div class="badge res">RESERVED · CC / EC</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Bilaspur Jn</div><div class="tt-time">06:45</div></div>
+        <div class="tt-mid"><span class="dur">~5h 30m</span>413 km</div>
+        <div style="text-align:right"><div class="tt-end">Nagpur</div><div class="tt-time">12:15</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day run">T</span><span class="day run">W</span><span class="day run">T</span><span class="day run">F</span><span class="day">S</span>
+      </div>
+      <div class="tt-note">Return 20826 leaves Nagpur 14:05, reaches Bilaspur 19:25. Via Raipur Jn, Durg, Gondia Jn — this is the one closest to a Raipur–Nagpur hop.</div>
+    </div>
+
+    <div class="ttcard" data-type="unr">
+      <div class="tt-top">
+        <div><h4>Ahmedabad ↔ Bhuj</h4><div class="num">Namo Bharat Rapid Rail · Western Railway</div></div>
+        <div class="badge unr">UNRESERVED · SINGLE CLASS</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Ahmedabad</div><div class="tt-time">17:25</div></div>
+        <div class="tt-mid"><span class="dur">~5h 45m</span>359 km</div>
+        <div style="text-align:right"><div class="tt-end">Bhuj</div><div class="tt-time">23:10</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day run">T</span><span class="day run">W</span><span class="day run">T</span><span class="day run">F</span><span class="day run">S</span>
+      </div>
+      <div class="tt-note">Runs daily. Return leaves Bhuj 05:05, reaches Ahmedabad 10:50. No seat reservation — buy the ticket at the counter or UTS app and board any coach. Stops: Sabarmati, Viramgam, Dhrangadhra, Halvad, Samakhiali, Bhachau, Gandhidham, Anjar.</div>
+    </div>
+
+    <div class="ttcard" data-type="unr">
+      <div class="tt-top">
+        <div><h4>Jaynagar ↔ Patna</h4><div class="num">Train 94803 / 94804 · Namo Bharat Rapid Rail · East Central Railway</div></div>
+        <div class="badge unr">UNRESERVED · SINGLE CLASS</div>
+      </div>
+      <div class="tt-route">
+        <div><div class="tt-end">Jaynagar</div><div class="tt-time">05:00</div></div>
+        <div class="tt-mid"><span class="dur">~5h 40m</span>266 km</div>
+        <div style="text-align:right"><div class="tt-end">Patna Jn</div><div class="tt-time">10:40</div></div>
+      </div>
+      <div class="tt-days">
+        <span class="day run">S</span><span class="day run">M</span><span class="day run">T</span><span class="day run">W</span><span class="day run">T</span><span class="day run">F</span><span class="day run">S</span>
+      </div>
+      <div class="tt-note">Runs all 7 days — no weekly off day. Return 94804 leaves Patna Jn 17:55, reaches Jaynagar 23:45 (5h 50m). 16-coach rake, launched April 2025. Via Madhubani, Sakri Jn and other Bihar stops.</div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<script>
+// view switching
+const views = document.querySelectorAll('.view');
+const navbtns = document.querySelectorAll('[data-view]');
+function showView(name){
+  views.forEach(v=>v.classList.toggle('on', v.id==='view-'+name));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+navbtns.forEach(b=>b.addEventListener('click', ()=>showView(b.dataset.view)));
+
+// timetable filter chips
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+    chip.classList.add('on');
+    const f = chip.dataset.f;
+    document.querySelectorAll('#tt-list .ttcard').forEach(card=>{
+      card.style.display = (f==='all' || card.dataset.type===f) ? '' : 'none';
+    });
+  });
+});
+
+// starfield canvas, lightweight, respects reduced motion
+(function(){
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let w,h,stars=[];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    stars = Array.from({length: Math.min(110, Math.floor(w*h/9000))}, ()=>({
+      x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.3+0.2,
+      s: Math.random()*0.15+0.02, p: Math.random()*Math.PI*2
+    }));
+  }
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = '#5ee9ff';
+    stars.forEach(st=>{
+      const tw = reduced ? 0.6 : (0.5 + 0.5*Math.sin(t*0.001*st.s*8 + st.p));
+      ctx.globalAlpha = 0.15 + tw*0.5;
+      ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if(!reduced) requestAnimationFrame(draw); 
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  if(reduced){ draw(0); } else { requestAnimationFrame(draw); }
+})();
+</script>
+</body>
+</html>
